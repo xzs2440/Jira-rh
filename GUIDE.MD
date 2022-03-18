@@ -41,3 +41,12 @@
 ## decodeURLComponent(转义成汉字) encodeURLComponent(转义成加密)  encodeURL(转义整个URL)
 ## 问题 : 状态提升
 ## 组件组合,数据传递,useEffect,useState 
+
+# 用Custom Hook 提取复用组件代码
+## 使用 useMount 和 useDebounce
+### useMount
+ * 不管是系统自带的hook还是自己写的Custom Hook都是不可以在普通函数中运行的,
+ * 1. 只能在其他hook中运行
+ * 2. 组件中运行
+ * 在写Custom Hook的时候一定要以use...开头
+### useDebounce
