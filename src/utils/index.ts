@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // 如果值为0的时候,转值
-export const isFalsy = (value:any) => (value === 0 ? false : !value);
+export const isFalsy = (value:unknown) => (value === 0 ? false : !value);
 // 清除无参数传入的数据
 export const cleanObj = (object:object) => {
   const result = { ...object };
@@ -61,7 +61,8 @@ export const useMount=(callback:()=>void)=>{
  * 但是value和debounceValue之间的关系,并不是直接可以转换的
  * 需要在内部定义一个状态(响应式的状态)
  * */
-export const useDebounce = (value:any, daday?:number) => {
+// 使用泛型来规范类型
+export const useDebounce = (value:unknown, daday?:number):any => {
   // Custom Hook定义了一个内部的变量 --debounceValue
   const [debounceValue, setDebounceValue] = useState(value);
   useEffect(() => {
