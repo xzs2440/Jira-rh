@@ -1,18 +1,34 @@
 import { useEffect, useState } from "react";
 
 // 如果值为0的时候,转值
-export const isFalsy = (value) => (value === 0 ? false : !value);
+export const isFalsy = (value:any) => (value === 0 ? false : !value);
 // 清除无参数传入的数据
-export const cleanObj = (object) => {
+export const cleanObj = (object:object) => {
   const result = { ...object };
   Object.keys(result).forEach((key) => {
+    // @ts-ignore
     const value = result[key];
     if (isFalsy(value)) {
+      // @ts-ignore
       delete result[key];
     }
   });
   return result;
 };
+
+// Custom Hook
+/**
+ * 不管是系统自带的hook还是自己写的Custom Hook都是不可以在普通函数中运行的,
+ * 1. 只能在其他hook中运行
+ * 2. 组件中运行
+ * 在写Custom Hook的时候一定要以use...开头
+*/ 
+export const useMount=(callback:()=>void)=>{
+  // 在页面一开始加载的时候,执行的函数
+  useEffect(()=>{
+    callback()
+  },[])
+}
 
 /**
  * debounce--防抖
@@ -45,7 +61,7 @@ export const cleanObj = (object) => {
  * 但是value和debounceValue之间的关系,并不是直接可以转换的
  * 需要在内部定义一个状态(响应式的状态)
  * */
-export const useDebounce = (value, daday = 2000) => {
+export const useDebounce = (value:any, daday?:number) => {
   // Custom Hook定义了一个内部的变量 --debounceValue
   const [debounceValue, setDebounceValue] = useState(value);
   useEffect(() => {
