@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 // 如果值为0的时候,转值
-export const isFalsy = (value:unknown) => (value === 0 ? false : !value);
+export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 // 清除无参数传入的数据
-export const cleanObj = (object:object) => {
+export const cleanObj = (object: object) => {
   const result = { ...object };
   Object.keys(result).forEach((key) => {
     // @ts-ignore
@@ -22,13 +22,13 @@ export const cleanObj = (object:object) => {
  * 1. 只能在其他hook中运行
  * 2. 组件中运行
  * 在写Custom Hook的时候一定要以use...开头
-*/ 
-export const useMount=(callback:()=>void)=>{
+ */
+export const useMount = (callback: () => void) => {
   // 在页面一开始加载的时候,执行的函数
-  useEffect(()=>{
-    callback()
-  },[])
-}
+  useEffect(() => {
+    callback();
+  }, []);
+};
 
 /**
  * debounce--防抖
@@ -62,7 +62,7 @@ export const useMount=(callback:()=>void)=>{
  * 需要在内部定义一个状态(响应式的状态)
  * */
 // 使用泛型来规范类型
-export const useDebounce = <V>(value:V, daday?:number)=> {
+export const useDebounce = <V>(value: V, daday?: number) => {
   // Custom Hook定义了一个内部的变量 --debounceValue
   const [debounceValue, setDebounceValue] = useState(value);
   useEffect(() => {
@@ -80,3 +80,18 @@ export const useDebounce = <V>(value:V, daday?:number)=> {
 /**
  * throttle--节流
  * */
+
+export const useArry = <T>(initialArray: T[]) => {
+  const [value, setValue] = useState(initialArray);
+  return {
+    value,
+    setValue,
+    add: (item: T) => setValue([...value, item]),
+    clear: () => setValue([]),
+    removeIndex: (index: number) => {
+      const copy = [...value];
+      copy.splice(index, 1);
+      setValue(copy);
+    },
+  };
+};
