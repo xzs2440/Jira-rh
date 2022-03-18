@@ -62,7 +62,7 @@ export const useMount=(callback:()=>void)=>{
  * 需要在内部定义一个状态(响应式的状态)
  * */
 // 使用泛型来规范类型
-export const useDebounce = (value:unknown, daday?:number):any => {
+export const useDebounce = <V>(value:V, daday?:number)=> {
   // Custom Hook定义了一个内部的变量 --debounceValue
   const [debounceValue, setDebounceValue] = useState(value);
   useEffect(() => {
