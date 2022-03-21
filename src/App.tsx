@@ -3,14 +3,16 @@ import logo from "./logo.svg";
 import "./App.css";
 import {ProjectListScreen} from 'pages/project-list'
 import {TsReactTest} from 'pages/text/try-user-array'
-import { Lgoin } from "pages/login";
+import { useAuth } from "context/auth-context";
+import { AuthenticatedApp } from "authenticated-app";
+import { UnauthenticatedApp } from "unauthenticated-app";
+// import { Lgoin } from "pages/login";
 
 function App() {
+  const {user}=useAuth()
   return (
     <div className="App">
-      {/* <ProjectListScreen/> */}
-      {/* <TsReactTest/> */}
-      <Lgoin/>
+      {user?<AuthenticatedApp/>:<UnauthenticatedApp/>}
     </div>
   );
 }

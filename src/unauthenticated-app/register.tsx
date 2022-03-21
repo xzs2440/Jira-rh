@@ -1,8 +1,8 @@
 import { useAuth } from "context/auth-context";
 import React, { FormEvent } from "react";
 
-export const LgoinPage = () => {
-  const { login, user } = useAuth();
+export const RegisterPage = () => {
+  const { register, user } = useAuth();
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     // 阻止表单提交的默认行为
     event.preventDefault();
@@ -10,12 +10,10 @@ export const LgoinPage = () => {
       .value;
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
-    login({ username, password });
+      register({ username, password });
   };
   return (
     <form onSubmit={handleSubmit}>
-      {user ? <div>登录成功,用户名:{user?.name}</div> : null}
-      {user?.token}
       <div>
         <label htmlFor="username">用户名 : </label>
         <input type="text" id={"username"} />
@@ -24,7 +22,7 @@ export const LgoinPage = () => {
         <label htmlFor="password">密码 : </label>
         <input type="password" id={"password"} />
       </div>
-      <button type="submit">登录</button>
+      <button type="submit">注册</button>
     </form>
   );
 };
