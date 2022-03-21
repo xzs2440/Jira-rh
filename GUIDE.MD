@@ -91,5 +91,7 @@
 ## auth-provider实现
 
 # 使用useContext 存储用户信息
-## 
+
+# 用fetch抽离通用HTTP请求方法，增强通用性
+
 ### 
