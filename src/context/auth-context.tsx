@@ -1,10 +1,23 @@
 import React, { ReactNode, useState } from "react";
 import * as auth from "auth-provider";
 import { User } from "pages/project-list/search-panel";
+import { http } from "request/http";
+import { useMount } from "utils";
 interface AuthForm {
   username: string;
   password: string;
 }
+const bootstrapUser = async () => {
+  let user = null;
+  // 先调用auth.getToken()
+  const token = auth.getToken();
+  if (token) {
+    // 如果存在token 就请求'me'api ,就会返回user信息
+    const data = await http("me", { token });
+    user = data.user;
+  }
+  return user;
+};
 const AuthContext = React.createContext<
   | {
       user: User | null;
@@ -21,7 +34,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
-
+  // 在页面加载的时候,调用bootstrapUser
+  useMount(() => {
+    bootstrapUser().then(setUser)
+  });
   return (
     <AuthContext.Provider
       children={children}

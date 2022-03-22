@@ -9,11 +9,6 @@ export const handleUserResponse = ({ user }: { user: User }) => {
 };
 
 
-/**
- * axios 和 fetch 的表现不一样，
- * axios可以直接在返回状态为2xx的时候抛出异常，
- * 而fetch则无法直接抛出，需要在response中 !而fetch则无法直接抛出，需要在response中.ok才能抛出异常
- * */ 
 // 登录
 export const login = (data: { username: string; password: string }) => {
   return fetch(`${apiUrl}/login`, {
