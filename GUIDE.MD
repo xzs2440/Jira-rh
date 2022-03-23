@@ -211,5 +211,48 @@ type Age = Exclude<PersonKeys, "name">;
 ### css选择器与html元素耦合
 ### css没有变量
 ### 
-### 
+# grid和flex的区别及应用场景
+## grid和flex的应用场景
+  1. 要区分 是一维布局，还是二维布局  
+    - 一般来说 一维布局用flex 二维布局用grid
+  2. 从内容出发还是 布局出发  
+    - 从内容出发：先有一组内容（数量一般不固定），然后希望他们均匀的分布在容器中，由内容自己来决定占据的空间大小
+    - 从布局出发：先规划网格（数量固定），然后再把元素往里填充
+    - 从内容出发,用flex 从布局出发,用grid
+
+<!-- 
+  const Container = styled.div`
+    display: grid;
+    /* grid-template-rows  -> 从上到下 表示header main footer */
+    grid-template-rows: 6rem 1fr 6rem;
+    /* grid-template-columns   -> 从左到右 表示 左 中 右 */
+    grid-template-columns: 20rem 1fr 20rem;
+    /* grid-template-areas  ->布局是怎么排列的   */
+    grid-template-areas:
+    /* header 独占一行 */
+      "header header deader"
+      /* 中间 左边是nav 中间是main 右边是 aside */
+      "nav main aside"
+      /* footer 独占一行 */
+      "footer footer footer";
+    height: 100vh;
+    grid-gap: 10rem;
+  `;
+  // grid-area用于给grid元素起名
+  const Header = styled.header`
+    grid-area: header;
+  `;
+  const Main = styled.main`
+    grid-area: main;
+  `;
+  const Nav = styled.nav`
+    grid-area: nav;
+  `;
+  const Aside = styled.aside`
+    grid-area: aside;
+  `;
+  const Footer = styled.footer`
+    grid-area: footer;
+  `; 
+-->
 ### 
