@@ -221,6 +221,25 @@ type Age = Exclude<PersonKeys, "name">;
     - 从内容出发,用flex 从布局出发,用grid
 
 <!-- 
+- html
+  <Container>
+    <Header>
+      <HeaderLeft>
+        <h3>logo</h3>
+        <h3>用户</h3>
+        <h3>项目</h3>
+      </HeaderLeft>
+      {/* <HeaderRight>right;</HeaderRight> */}
+      <Button onClick={logout}>登出</Button>
+    </Header>
+    <Nav>nav</Nav>
+    <Main>
+      <ProjectListScreen />
+    </Main>
+    <Aside>Aside</Aside>
+    <Footer>footer</Footer>
+  </Container>
+- css
   const Container = styled.div`
     display: grid;
     /* grid-template-rows  -> 从上到下 表示header main footer */
@@ -241,6 +260,14 @@ type Age = Exclude<PersonKeys, "name">;
   // grid-area用于给grid元素起名
   const Header = styled.header`
     grid-area: header;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  `;
+  const HeaderLeft = styled.div`
+    display: flex;
+    align-items: center;
   `;
   const Main = styled.main`
     grid-area: main;
