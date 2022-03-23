@@ -1,21 +1,39 @@
+import React from "react";
 import styled from "@emotion/styled";
-import { Button } from "antd";
+import { Button, Dropdown, Menu } from "antd";
 import { useAuth } from "context/auth-context";
 import { ProjectListScreen } from "pages/project-list";
 import { Row } from "components/lib";
-import React from "react";
+import { ReactComponent as Jira } from "assets/jira.svg";
+
 export const AuthenticatedApp = () => {
-  const { logout } = useAuth();
+  const { logout,user } = useAuth();
   return (
     <div>
       <Header between={true}>
         <HeaderLeft gap={true}>
-          <h3>logo</h3>
+          <Jira width={"18rem"} color={"rgb(38,132,255)"} />
           <h3>用户</h3>
           <h3>项目</h3>
         </HeaderLeft>
-        {/* <HeaderRight>right;</HeaderRight> */}
-        <Button onClick={logout}>登出</Button>
+        <HeaderRight>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key="logout">
+                  <Button type={"link"} onClick={logout}>
+                    登出
+                  </Button>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <Button type="link" onClick={(e) => e.preventDefault()}>
+              Hi, {user?.name}
+            </Button>
+          </Dropdown>
+        </HeaderRight>
+        {/* <Button onClick={logout}>登出</Button> */}
       </Header>
       <Main>
         <ProjectListScreen />
@@ -36,8 +54,12 @@ const Container = styled.div`
 // grid-area用于给grid元素起名
 const Header = styled(Row)`
   justify-content: space-between;
+  padding: .5rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  z-index: 1;
 `;
 const HeaderLeft = styled(Row)``;
+const HeaderRight = styled.div``;
 const Main = styled.main`
   height: calc(100vh - 6rem);
   grid-area: main;
