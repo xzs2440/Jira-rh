@@ -7,7 +7,8 @@ import { Row } from "components/lib";
 import { ReactComponent as Jira } from "assets/jira.svg";
 
 export const AuthenticatedApp = () => {
-  const { logout,user } = useAuth();
+  const { logout, user } = useAuth();
+  const value: any = undefined;
   return (
     <div>
       <Header between={true}>
@@ -54,7 +55,7 @@ const Container = styled.div`
 // grid-area用于给grid元素起名
 const Header = styled(Row)`
   justify-content: space-between;
-  padding: .5rem;
+  padding: 0.5rem;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
   z-index: 1;
 `;

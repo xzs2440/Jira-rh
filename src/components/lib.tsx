@@ -41,7 +41,6 @@ export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
   <FullPage>
     <DevTools />
     <Typography.Text type="danger">{error?.message}</Typography.Text>
-    {/* <DevTools />
-    <ErrorBox error={error} /> */}
+    {/* <ErrorBox error={error} /> */}
   </FullPage>
 );
