@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 
 // 如果值为0的时候,转值
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
+export const isVoid = (value: unknown) =>
+  value === undefined || value === null || value === "";
 // 清除无参数传入的数据
-export const cleanObj = (object: object) => {
+export const cleanObj = (object: { [key: string]: unknown }) => {
   const result = { ...object };
   Object.keys(result).forEach((key) => {
-    // @ts-ignore
     const value = result[key];
-    if (isFalsy(value)) {
-      // @ts-ignore
+    if (isVoid(value)) {
       delete result[key];
     }
   });
@@ -27,6 +27,8 @@ export const useMount = (callback: () => void) => {
   // 在页面一开始加载的时候,执行的函数
   useEffect(() => {
     callback();
+    // 依赖项加上callback会造成无限循环，这个和useCallback和useMeno有关系
+    // eslint-disabled-next-line react-hooks/exhaustive-deps
   }, []);
 };
 
