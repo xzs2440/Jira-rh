@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { title } from "process";
+import { useEffect, useState, useRef } from "react";
 
 // 如果值为0的时候,转值
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
@@ -96,4 +97,22 @@ export const useArry = <T>(initialArray: T[]) => {
       setValue(copy);
     },
   };
+};
+
+export const useDocumentTitle = (
+  title: string,
+  keepOnUnmount: boolean = true
+) => {
+  // 在加载的时候用useRef保存一个值，那么这个值在组件的整个生命周期中，是不会变化的
+  const oldTitle = useRef(document.title).current;
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+  useEffect(() => {
+    return () => {
+      if (!keepOnUnmount) {
+        document.title = oldTitle;
+      }
+    };
+  }, [keepOnUnmount, oldTitle]);
 };

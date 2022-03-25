@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { cleanObj, useDebounce, useMount } from "utils";
+import { cleanObj, useDebounce, useDocumentTitle, useMount } from "utils";
 import { Project } from "pages/project-list/list";
 import * as qs from "qs";
 import { List } from "./list";
@@ -10,6 +10,7 @@ import { Typography } from "antd";
 // import { useAsync } from "utils/use-async";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
+// import { Helmet } from "react-helmet";
 const apiURL = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({ name: "", personId: "" });
@@ -48,9 +49,12 @@ export const ProjectListScreen = () => {
   //   //   }
   //   // });
   // });
-
+  useDocumentTitle("项目列表", false);
   return (
     <Container>
+      {/* <Helmet>
+        <title>项目列表</title>
+      </Helmet> */}
       <h1>项目列表</h1>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? (

@@ -6,16 +6,26 @@ import styled from "@emotion/styled";
 import logo from "assets/logo.jpg";
 import left from "assets/left.svg";
 import right from "assets/right.svg";
+import { useDocumentTitle } from "utils";
+import { Helmet } from "react-helmet";
 export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<null | Error>(null);
+  useDocumentTitle('请登录或注册以继续')
   return (
     <Container>
+      {/* <Helmet>
+        <title>请登录或注册以继续</title>
+      </Helmet> */}
       <Header />
       <Background />
-      <Button onClick={()=>{
-        throw new Error("点击抛出一个异常");
-      }}>抛出异常</Button>
+      {/* <Button
+        onClick={() => {
+          throw new Error("点击抛出一个异常");
+        }}
+      >
+        抛出异常
+      </Button> */}
       <ShadowCard>
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
         {error ? (
