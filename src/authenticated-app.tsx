@@ -3,43 +3,64 @@ import styled from "@emotion/styled";
 import { Button, Dropdown, Menu } from "antd";
 import { useAuth } from "context/auth-context";
 import { ProjectListScreen } from "pages/project-list";
+import { ProjectScreen } from "pages/project";
 import { Row } from "components/lib";
 import { ReactComponent as Jira } from "assets/jira.svg";
+import { Navigate, Route, Routes } from "react-router";
+import { BrowserRouter as Router } from "react-router-dom";
 
 export const AuthenticatedApp = () => {
-  const { logout, user } = useAuth();
   const value: any = undefined;
   return (
     <div>
-      <Header between={true}>
-        <HeaderLeft gap={true}>
-          <Jira width={"18rem"} color={"rgb(38,132,255)"} />
-          <h2>用户</h2>
-          <h2>项目</h2>
-        </HeaderLeft>
-        <HeaderRight>
-          <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item key="logout">
-                  <Button type={"link"} onClick={logout}>
-                    登出
-                  </Button>
-                </Menu.Item>
-              </Menu>
-            }
-          >
-            <Button type="link" onClick={(e) => e.preventDefault()}>
-              Hi, {user?.name}
-            </Button>
-          </Dropdown>
-        </HeaderRight>
-        {/* <Button onClick={logout}>登出</Button> */}
-      </Header>
+      <PageHeader />
       <Main>
-        <ProjectListScreen />
+        {/* <ProjectListScreen /> */}
+        <Router>
+          <Routes>
+            <Route path={"/projects"} element={<ProjectListScreen />} />
+            <Route
+              path={"/projects/:projectId/*"}
+              element={<ProjectScreen />}
+            />
+            {/* <Route path={"/project"} element={<ProjectListScreen />} /> */}
+            {/* 如果没有匹配到，就会打开下面Navigate默认的路由 */}
+            {/* <Redirct to={"/projects"} /> */}
+          </Routes>
+        </Router>
       </Main>
     </div>
+  );
+};
+
+const PageHeader = () => {
+  const { logout, user } = useAuth();
+  return (
+    <Header between={true}>
+      <HeaderLeft gap={true}>
+        <Jira width={"18rem"} color={"rgb(38,132,255)"} />
+        <h2>用户</h2>
+        <h2>项目</h2>
+      </HeaderLeft>
+      <HeaderRight>
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key="logout">
+                <Button type={"link"} onClick={logout}>
+                  登出
+                </Button>
+              </Menu.Item>
+            </Menu>
+          }
+        >
+          <Button type="link" onClick={(e) => e.preventDefault()}>
+            Hi, {user?.name}
+          </Button>
+        </Dropdown>
+      </HeaderRight>
+      {/* <Button onClick={logout}>登出</Button> */}
+    </Header>
   );
 };
 
