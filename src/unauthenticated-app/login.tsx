@@ -2,17 +2,28 @@ import { useAuth } from "context/auth-context";
 import React, { FormEvent } from "react";
 import { Button, Form, Input } from "antd";
 import { LoginBtn } from "./index";
+import { useAsync } from "utils/use-async";
 
-export const LgoinPage = () => {
+export const LgoinPage = ({ onError }: { onError: (error: Error) => void }) => {
   const { login, user } = useAuth();
-  const handleSubmit = (values: { username: string; password: string }) => {
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
+  const handleSubmit = async (values: {
+    username: string;
+    password: string;
+  }) => {
     // 阻止表单提交的默认行为
     // event.preventDefault();
     // const username = (event.currentTarget.elements[0] as HTMLInputElement)
     //   .value;
     // const password = (event.currentTarget.elements[1] as HTMLInputElement)
     //   .value;
-    login(values);
+    // login(values);
+    try {
+      await run(login(values));
+    } catch (e: any) {
+      onError(e);
+    }
+    // await login(values).catch(onError);
   };
   return (
     <Form onFinish={handleSubmit}>
@@ -29,7 +40,7 @@ export const LgoinPage = () => {
         <Input placeholder={"密码"} type="text" id={"password"} />
       </Form.Item>
       <Form.Item>
-        <LoginBtn type={"primary"} htmlType={"submit"}>
+        <LoginBtn loading={isLoading} type={"primary"} htmlType={"submit"}>
           登录
         </LoginBtn>
       </Form.Item>
