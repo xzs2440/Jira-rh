@@ -103,6 +103,8 @@ export const useDocumentTitle = (
   title: string,
   keepOnUnmount: boolean = true
 ) => {
+  // 页面加载时：oldTitle === 旧titile -> 'React App'
+  // 加载后：ldTitle === 新titile
   // 在加载的时候用useRef保存一个值，那么这个值在组件的整个生命周期中，是不会变化的
   const oldTitle = useRef(document.title).current;
   useEffect(() => {
@@ -111,6 +113,7 @@ export const useDocumentTitle = (
   useEffect(() => {
     return () => {
       if (!keepOnUnmount) {
+        // 如果不指定依赖，读到的就是旧titile
         document.title = oldTitle;
       }
     };

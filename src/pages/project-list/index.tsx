@@ -3,6 +3,7 @@ import { cleanObj, useDebounce, useDocumentTitle, useMount } from "utils";
 import { Project } from "pages/project-list/list";
 import * as qs from "qs";
 import { List } from "./list";
+// import { Text } from "../../components/text-closure";
 import { SearchPanel } from "./search-panel";
 import { useHttp } from "request/http";
 import styled from "@emotion/styled";
@@ -52,6 +53,7 @@ export const ProjectListScreen = () => {
   useDocumentTitle("项目列表", false);
   return (
     <Container>
+      {/* <Text /> */}
       {/* <Helmet>
         <title>项目列表</title>
       </Helmet> */}
