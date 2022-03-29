@@ -15,10 +15,13 @@ import { useUrlQueryParam } from "utils/url";
 // import { Helmet } from "react-helmet";
 const apiURL = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
-  const [, setParam] = useState({ name: "", personId: "" });
+  // const [, setParam] = useState({ name: "", personId: "" });
   // const [keys,setKeys]=useState<('name'|'personId')[]>(['name','personId'])
   // const [param]=useUrlQueryParam(keys)
-  const [param]=useUrlQueryParam(['name','personId'])
+  // 基本类型,可以放到依赖里, 组件状态可以放到依赖里,非组件状态的对象,绝不可放到依赖里
+  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
+  // console.log(param,'---param');
+
   const debouncedParam = useDebounce(param, 200);
   // const [users, setUsers] = useState([]);
   const { isLoading, error, data: list } = useProjects(debouncedParam);
@@ -75,7 +78,7 @@ export const ProjectListScreen = () => {
   );
 };
 
-ProjectListScreen.whyDidYouRender = true;
+ProjectListScreen.whyDidYouRender = false;
 /**
  * ProjectListScreen.whyDidYouRender = true;
  * 相当于
