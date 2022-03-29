@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "@types/qs": "^6.9.7",
-    "@types/react-helmet": "^6.1.5"
+    "@types/react-helmet": "^6.1.5",
+    "@welldone-software/why-did-you-render": "^6.2.3"
   }
 }

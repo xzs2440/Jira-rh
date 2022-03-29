@@ -25,7 +25,10 @@ export const AuthenticatedApp = () => {
               element={<ProjectScreen />}
             />
             {/* 如果没有匹配到，就会打开下面Navigate默认的路由 */}
-            <Route path="/" element={<Navigate to="/projects" replace={true}/>} />
+            <Route
+              path="/"
+              element={<Navigate to="/projects" replace={true} />}
+            />
             {/* <Navigate to={"/projects"} /> */}
           </Routes>
         </Router>
@@ -40,9 +43,13 @@ const PageHeader = () => {
     <Header between={true}>
       <HeaderLeft gap={true}>
         <Button type="link" onClick={resetRoute}>
-          <SoftwareLogo width={"18rem"} color={"rgb(38,132,255)"} />
+          <SoftwareLogo
+            width={"10rem"}
+            height={35}
+            color={"rgb(38,132,255)"}
+          />
         </Button>
-        
+
         <h2>用户</h2>
         <h2>项目</h2>
       </HeaderLeft>

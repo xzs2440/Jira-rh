@@ -11,14 +11,22 @@ import { Typography } from "antd";
 // import { useAsync } from "utils/use-async";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
+import { useUrlQueryParam } from "utils/url";
 // import { Helmet } from "react-helmet";
 const apiURL = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
-  const [param, setParam] = useState({ name: "", personId: "" });
+  const [, setParam] = useState({ name: "", personId: "" });
+  // const [keys,setKeys]=useState<('name'|'personId')[]>(['name','personId'])
+  // const [param]=useUrlQueryParam(keys)
+  const [param]=useUrlQueryParam(['name','personId'])
   const debouncedParam = useDebounce(param, 200);
   // const [users, setUsers] = useState([]);
   const { isLoading, error, data: list } = useProjects(debouncedParam);
   const { data: users } = useUser();
+  useDocumentTitle("项目列表", false);
+  // console.log(useUrlQueryParam(["name"]));
+  // const test = useUrlQueryParam(["name"]);
+
   // const client = useHttp();
   // const [list, setList] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +58,7 @@ export const ProjectListScreen = () => {
   //   //   }
   //   // });
   // });
-  useDocumentTitle("项目列表", false);
+
   return (
     <Container>
       {/* <Text /> */}
@@ -66,6 +74,16 @@ export const ProjectListScreen = () => {
     </Container>
   );
 };
+
+ProjectListScreen.whyDidYouRender = true;
+/**
+ * ProjectListScreen.whyDidYouRender = true;
+ * 相当于
+ *  class Test extends React.Component<any, any> {
+      static whyDidYouRender = true;
+    } 
+ * */
+
 const Container = styled.div`
   padding: 3.2rem;
 `;
