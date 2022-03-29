@@ -5,9 +5,10 @@ import { useAuth } from "context/auth-context";
 import { ProjectListScreen } from "pages/project-list";
 import { ProjectScreen } from "pages/project";
 import { Row } from "components/lib";
-import { ReactComponent as Jira } from "assets/jira.svg";
+import { ReactComponent as SoftwareLogo } from "assets/jira.svg";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
+import { resetRoute } from "utils";
 
 export const AuthenticatedApp = () => {
   const value: any = undefined;
@@ -23,9 +24,9 @@ export const AuthenticatedApp = () => {
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
             />
-            {/* <Route path={"/project"} element={<ProjectListScreen />} /> */}
             {/* 如果没有匹配到，就会打开下面Navigate默认的路由 */}
-            {/* <Redirct to={"/projects"} /> */}
+            <Route path="/" element={<Navigate to="/projects" replace={true}/>} />
+            {/* <Navigate to={"/projects"} /> */}
           </Routes>
         </Router>
       </Main>
@@ -38,7 +39,10 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <Jira width={"18rem"} color={"rgb(38,132,255)"} />
+        <Button type="link" onClick={resetRoute}>
+          <SoftwareLogo width={"18rem"} color={"rgb(38,132,255)"} />
+        </Button>
+        
         <h2>用户</h2>
         <h2>项目</h2>
       </HeaderLeft>

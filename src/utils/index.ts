@@ -119,3 +119,5 @@ export const useDocumentTitle = (
     };
   }, [keepOnUnmount, oldTitle]);
 };
+// 重置路由,不但回到根路由，而且还会刷新浏览器
+export const resetRoute = () => (window.location.href = window.location.origin);
