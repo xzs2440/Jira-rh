@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useAsync } from "utils/use-async";
 import { Project } from "pages/project-list/list";
 import { cleanObj } from "utils";
@@ -6,11 +6,13 @@ import { useHttp } from "request/http";
 export const useProjects = (param?: Partial<Project>) => {
   const { run, ...result } = useAsync<Project[]>();
   const client = useHttp();
-  const fetchProjects = () =>
-    client("projects", { data: cleanObj(param || {}) });
+  const fetchProjects = useCallback(
+    () => client("projects", { data: cleanObj(param || {}) }),
+    [param, client]
+  );
   useEffect(() => {
     run(fetchProjects(), { retry: fetchProjects });
-  }, [param]); // param变化的时候会触发
+  }, [param, run, fetchProjects]); // param变化的时候会触发
   return result;
 };
 // 编辑list

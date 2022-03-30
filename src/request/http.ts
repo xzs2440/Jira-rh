@@ -2,6 +2,7 @@ import qs from "qs";
 import * as auth from "auth-provider";
 import { useAuth } from "context/auth-context";
 import { type } from "os";
+import { useCallback } from "react";
 const apiUrl = process.env.REACT_APP_API_URL;
 interface Config extends RequestInit {
   token?: string;
@@ -51,11 +52,12 @@ export const http = async (
 
 export const useHttp = () => {
   const { user } = useAuth();
-  return (...[endpoint, config]: Parameters<typeof http>) =>
-    http(endpoint, { ...config, token: user?.token });
+  return useCallback(
+    (...[endpoint, config]: Parameters<typeof http>) =>
+      http(endpoint, { ...config, token: user?.token }),
+    [user?.token]
+  );
 };
-
-
 
 /**
  * TS Utility typeof --工具
@@ -106,12 +108,12 @@ export const useHttp = () => {
 // let xiaofang: Omit<Person, "name" | "age"> = { name: "daxin" }; //从Person中,把name和age都删掉
 
 /**
-   * TS的Utility
-   * Types-Pick、
-   * Exclude、
-   * Partial
-   * Omit
-   * 实现
+ * TS的Utility
+ * Types-Pick、
+ * Exclude、
+ * Partial
+ * Omit
+ * 实现
  * */
 /**
  *  Partial的实现
