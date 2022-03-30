@@ -2,9 +2,11 @@ import React from "react";
 import { User } from "pages/project-list/search-panel";
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
+import { Pin } from "components/pin";
 // react-router 和 react-router-dom 的关系，
 // 类似于react和react-dom、react-native、react-vr...
 import { Link } from "react-router-dom";
+import { useEditProject } from "utils/project";
 
 export interface Project {
   id: number;
@@ -18,11 +20,24 @@ interface ListProps extends TableProps<Project> {
   users: User[];
 }
 export const List = ({ users, ...props }: ListProps) => {
+  const { mutate } = useEditProject();
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   return (
     <Table
       pagination={false}
       rowKey={"id"}
       columns={[
+        {
+          title: <Pin checked={true} disabled={true} />,
+          render: (val, record) => {
+            return (
+              <Pin
+                checked={record.pin}
+                onCheckedChange={pinProject(record.id)}
+              />
+            );
+          },
+        },
         {
           title: "名称",
           // dataIndex: "name",
