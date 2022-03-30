@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { setConstantValue } from "typescript";
+import { useMountedRef } from "utils";
 
 interface State<D> {
   error: Error | null;
@@ -28,6 +29,7 @@ export const useAsync = <D>(
     ...defaultInitialStatus,
     ...initialState,
   });
+  const useMounted = useMountedRef();
   // useState 直接传入函数的意义是：惰性初始化，所以用useState保存函数，不能直接传入函数
   const [retry, setRetry] = useState(() => () => {});
   const setData = (data: D) =>
@@ -52,14 +54,16 @@ export const useAsync = <D>(
     }
     setRetry(() => () => {
       if (runConfig?.retry) {
-        run(runConfig?.retry(),runConfig);
+        run(runConfig?.retry(), runConfig);
       }
     });
     setState({ ...state, stat: "loading" });
     return promise
       .then((data) => {
-        setData(data);
-        return data;
+        if (useMounted.current) {
+          setData(data);
+          return data;
+        }
       })
       .catch((err) => {
         // catch会消化异常，如果不主动抛出去，外面是接收不到异常的
@@ -71,9 +75,6 @@ export const useAsync = <D>(
         return err;
       });
   };
-  // const retry = () => {
-  //   run(oldPromise);
-  // };
   return {
     isIdle: state.stat === "idle",
     isLoading: state.stat === "loading",

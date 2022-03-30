@@ -121,3 +121,27 @@ export const useDocumentTitle = (
 };
 // 重置路由,不但回到根路由，而且还会刷新浏览器
 export const resetRoute = () => (window.location.href = window.location.origin);
+
+// export const subset=<O extends {[key in string]:unknown},K extends keyof O>(
+//   obj:O,
+//   keys:K[]
+// )=>{
+//   const filterEntrise=Object.entries(obj).filter(key)=>{
+//     keys.includes(key as K)
+//   };
+//   return Object.fromEntries(filterEntrise) as Pick<O,K>
+// }
+
+// 返回组件的挂载状态，如果还没挂载或者已经卸载，返回false，反之，返回true
+// 不允许做赋值setData
+export const useMountedRef = () => {
+  const mountedRef = useRef(false);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  });
+  return mountedRef;
+};
