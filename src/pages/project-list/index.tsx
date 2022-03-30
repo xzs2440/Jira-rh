@@ -7,7 +7,7 @@ import { List } from "./list";
 import { SearchPanel } from "./search-panel";
 import { useHttp } from "request/http";
 import styled from "@emotion/styled";
-import { Typography } from "antd";
+import { Typography, Button } from "antd";
 // import { useAsync } from "utils/use-async";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
@@ -19,7 +19,12 @@ import { useProjectsSearchParams } from "./util";
 export const ProjectListScreen = () => {
   useDocumentTitle("项目列表", false);
   const [param, setParam] = useProjectsSearchParams();
-  const { isLoading, error, data: list } = useProjects(useDebounce(param, 200));
+  const {
+    isLoading,
+    error,
+    data: list,
+    retry,
+  } = useProjects(useDebounce(param, 200));
   const { data: users } = useUser();
   // const [, setParam] = useState({ name: "", personId: "" });
   // const [keys,setKeys]=useState<('name'|'personId')[]>(['name','personId'])
@@ -74,11 +79,17 @@ export const ProjectListScreen = () => {
         <title>项目列表</title>
       </Helmet> */}
       <h1>项目列表</h1>
+      {/* <Button onClick={retry}>retry</Button> */}
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
-      <List loading={isLoading} dataSource={list || []} users={users || []} />
+      <List
+        refresh={retry}
+        loading={isLoading}
+        dataSource={list || []}
+        users={users || []}
+      />
     </Container>
   );
 };

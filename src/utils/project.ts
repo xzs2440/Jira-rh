@@ -6,8 +6,10 @@ import { useHttp } from "request/http";
 export const useProjects = (param?: Partial<Project>) => {
   const { run, ...result } = useAsync<Project[]>();
   const client = useHttp();
+  const fetchProjects = () =>
+    client("projects", { data: cleanObj(param || {}) });
   useEffect(() => {
-    run(client("projects", { data: cleanObj(param || {}) }));
+    run(fetchProjects(), { retry: fetchProjects });
   }, [param]); // param变化的时候会触发
   return result;
 };
