@@ -12,24 +12,29 @@ import { Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
 import { useUrlQueryParam } from "utils/url";
+import { useProjectsSearchParams } from "./util";
 // import { Helmet } from "react-helmet";
-const apiURL = process.env.REACT_APP_API_URL;
+// const apiURL = process.env.REACT_APP_API_URL;
+// 基本类型,可以放到依赖里, 组件状态可以放到依赖里,非组件状态的对象,绝不可放到依赖里
 export const ProjectListScreen = () => {
+  useDocumentTitle("项目列表", false);
+  const [param, setParam] = useProjectsSearchParams();
+  const { isLoading, error, data: list } = useProjects(useDebounce(param, 200));
+  const { data: users } = useUser();
   // const [, setParam] = useState({ name: "", personId: "" });
   // const [keys,setKeys]=useState<('name'|'personId')[]>(['name','personId'])
   // const [param]=useUrlQueryParam(keys)
-  // 基本类型,可以放到依赖里, 组件状态可以放到依赖里,非组件状态的对象,绝不可放到依赖里
-  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
-  // console.log(param,'---param');
-
-  const debouncedParam = useDebounce(param, 200);
+  // const [param, setParam] = useUrlQueryParam(["name", "personId"]);
+  // // console.log(param,'---param');
+  // const projectParam = {
+  //   ...param,
+  //   personId: Number(param.personId) || undefined,
+  // };
+  // const debouncedParam = useDebounce(projectParam, 200);
   // const [users, setUsers] = useState([]);
-  const { isLoading, error, data: list } = useProjects(debouncedParam);
-  const { data: users } = useUser();
-  useDocumentTitle("项目列表", false);
+  // const { isLoading, error, data: list } = useProjects(debouncedParam);
   // console.log(useUrlQueryParam(["name"]));
   // const test = useUrlQueryParam(["name"]);
-
   // const client = useHttp();
   // const [list, setList] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
