@@ -304,3 +304,7 @@ type Age = Exclude<PersonKeys, "name">;
 ## 所谓依赖注入就是由loC容器在运行期间，动态地将某种依赖关系注入到对象中
 ## 所以loC和DI是从不同角度来描述同一件事情，就是通过引入loC容器，利用依赖注入方式，实现对象之间的解释
 ## 提高开发效率  提高模块化  便于单元测试
+
+# redux 和useReducer
+## useReducer：通过action的传递，更新复杂逻辑的状态，主要是可以实现类似Redux中的Reducer部分，实现业务逻辑的可行性。
+## useContext：可访问全局状态，避免一层层的传递状态。这符合Redux其中的一项规则，就是状态全局化，并能统一管理。
