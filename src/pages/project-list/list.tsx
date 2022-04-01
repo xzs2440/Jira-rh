@@ -1,8 +1,9 @@
 import React from "react";
 import { User } from "pages/project-list/search-panel";
-import { Table, TableProps } from "antd";
+import { Table, TableProps, Dropdown, Menu } from "antd";
 import dayjs from "dayjs";
 import { Pin } from "components/pin";
+import { ButtonNoPadding } from "components/lib";
 // react-router 和 react-router-dom 的关系，
 // 类似于react和react-dom、react-native、react-vr...
 import { Link } from "react-router-dom";
@@ -19,6 +20,7 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
+  setProjectModalOpen: (isOpen: boolean) => void;
 }
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
@@ -74,6 +76,39 @@ export const List = ({ users, ...props }: ListProps) => {
                   ? dayjs(project.created).format("YYYY-MM-DD")
                   : "无"}
               </span>
+            );
+          },
+        },
+        {
+          title: "创建时间",
+          dataIndex: "created",
+          render(value, project) {
+            return (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key="edit">
+                      <ButtonNoPadding
+                        type="link"
+                        // onClick={editProject(project.id)}
+                        onClick={()=>props.setProjectModalOpen(true)}
+                      >
+                        编辑
+                      </ButtonNoPadding>
+                    </Menu.Item>
+                    <Menu.Item key="delete">
+                      <ButtonNoPadding
+                        // onClick={() => confirmDeleteProject(project.id)}
+                        type="link"
+                      >
+                        删除
+                      </ButtonNoPadding>
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                <ButtonNoPadding type="link">...</ButtonNoPadding>
+              </Dropdown>
             );
           },
         },

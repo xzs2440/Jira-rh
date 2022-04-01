@@ -282,4 +282,15 @@ type Age = Exclude<PersonKeys, "name">;
     grid-area: footer;
   `; 
 -->
-### 
+# 何时使用useMemo 何时使用useCallback
+## 非基本类型的依赖 -- 使用useCallback
+## 如果要写自定义hook的时候，需要返回function，就需要使用useCallback来限制
+# const he var
+## 其实const和var都存在变量提升，但是const不像var一样直接提升到顶部，同时赋值undefined
+## conts存在temporal dead zone （暂时性死区），可以提升到顶部，但是在初始化之前，无法反访问到
+
+# 状态提升 -- props
+# prop drilling 
+## 定义与使用 距离太远了 -- 紧耦合
+
+# 组合组件 -- 

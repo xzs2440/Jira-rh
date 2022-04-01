@@ -44,3 +44,7 @@ export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
     {/* <ErrorBox error={error} /> */}
   </FullPage>
 );
+
+export const ButtonNoPadding = styled(Button)`
+  padding: 0;
+`;
