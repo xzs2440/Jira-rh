@@ -308,3 +308,7 @@ type Age = Exclude<PersonKeys, "name">;
 # redux 和useReducer
 ## useReducer：通过action的传递，更新复杂逻辑的状态，主要是可以实现类似Redux中的Reducer部分，实现业务逻辑的可行性。
 ## useContext：可访问全局状态，避免一层层的传递状态。这符合Redux其中的一项规则，就是状态全局化，并能统一管理。
+
+# useState useReducer
+## useState 适合用于定义单个的状态
+## useReducer  适合定义一群会互相影响的状态
