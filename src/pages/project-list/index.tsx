@@ -18,7 +18,8 @@ import { Row } from "components/lib";
 // const apiURL = process.env.REACT_APP_API_URL;
 // 基本类型,可以放到依赖里, 组件状态可以放到依赖里,非组件状态的对象,绝不可放到依赖里
 export const ProjectListScreen = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
+  // setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
 }) => {
   useDocumentTitle("项目列表", false);
   const [param, setParam] = useProjectsSearchParams();
@@ -79,9 +80,10 @@ export const ProjectListScreen = (props: {
     <Container>
       <Row between={true} style={{ justifyContent: "space-between" }}>
         <h1>项目列表</h1>
-        <Button onClick={() => props.setProjectModalOpen(true)}>
+        {/* <Button onClick={() => props.setProjectModalOpen(true)}>
           创建项目
-        </Button>
+        </Button> */}
+        {props.projectButton}
       </Row>
       {/* <Text /> */}
       {/* <Helmet>
@@ -94,7 +96,7 @@ export const ProjectListScreen = (props: {
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
       <List
-        setProjectModalOpen={props.setProjectModalOpen}
+        projectButton={props.projectButton}
         refresh={retry}
         loading={isLoading}
         dataSource={list || []}
