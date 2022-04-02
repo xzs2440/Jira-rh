@@ -312,3 +312,13 @@ type Age = Exclude<PersonKeys, "name">;
 # useState useReducer
 ## useState 适合用于定义单个的状态
 ## useReducer  适合定义一群会互相影响的状态
+
+# redux 
+## 可预测的状态容器
+
+# react-redux 与 HoC(高阶组件)
+## Reducer必须是同步操作 异步操作是不合适的，必须保存函数的纯洁性
+# Redux Toolkit  -- 将redux简单化的库
+## 解决了redux 配置太复杂了
+## 解决了redux 有太多依赖需要安装
+## 解决了redux 需要很多模板代码
