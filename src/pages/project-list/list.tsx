@@ -8,6 +8,7 @@ import { ButtonNoPadding } from "components/lib";
 // 类似于react和react-dom、react-native、react-vr...
 import { Link } from "react-router-dom";
 import { useEditProject } from "utils/project";
+import { useProjectModal } from "./util";
 
 export interface Project {
   id: number;
@@ -20,12 +21,13 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
-  projectButton: JSX.Element;
+  // projectButton: JSX.Element;
 }
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
   const pinProject = (id: number) => (pin: boolean) =>
     mutate({ id, pin }).then(props.refresh);
+  const { open } = useProjectModal();
 
   return (
     <Table
@@ -88,14 +90,13 @@ export const List = ({ users, ...props }: ListProps) => {
                 overlay={
                   <Menu>
                     <Menu.Item key="edit">
-                      {props.projectButton}
-                      {/* <ButtonNoPadding
+                      <ButtonNoPadding
                         type="link"
                         // onClick={editProject(project.id)}
-                        onClick={() => props.setProjectModalOpen(true)}
+                        onClick={open}
                       >
                         编辑
-                      </ButtonNoPadding> */}
+                      </ButtonNoPadding>
                     </Menu.Item>
                     <Menu.Item key="delete">
                       <ButtonNoPadding

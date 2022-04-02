@@ -12,15 +12,12 @@ import { Typography, Button } from "antd";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
 import { useUrlQueryParam } from "utils/url";
-import { useProjectsSearchParams } from "./util";
-import { Row } from "components/lib";
+import { useProjectModal, useProjectsSearchParams } from "./util";
+import { ButtonNoPadding, Row } from "components/lib";
 // import { Helmet } from "react-helmet";
 // const apiURL = process.env.REACT_APP_API_URL;
 // 基本类型,可以放到依赖里, 组件状态可以放到依赖里,非组件状态的对象,绝不可放到依赖里
-export const ProjectListScreen = (props: {
-  // setProjectModalOpen: (isOpen: boolean) => void;
-  projectButton: JSX.Element;
-}) => {
+export const ProjectListScreen = () => {
   useDocumentTitle("项目列表", false);
   const [param, setParam] = useProjectsSearchParams();
   const {
@@ -30,6 +27,7 @@ export const ProjectListScreen = (props: {
     retry,
   } = useProjects(useDebounce(param, 200));
   const { data: users } = useUser();
+  const { open } = useProjectModal();
   // const [, setParam] = useState({ name: "", personId: "" });
   // const [keys,setKeys]=useState<('name'|'personId')[]>(['name','personId'])
   // const [param]=useUrlQueryParam(keys)
@@ -80,10 +78,7 @@ export const ProjectListScreen = (props: {
     <Container>
       <Row between={true} style={{ justifyContent: "space-between" }}>
         <h1>项目列表</h1>
-        {/* <Button onClick={() => props.setProjectModalOpen(true)}>
-          创建项目
-        </Button> */}
-        {props.projectButton}
+        <Button onClick={open}>创建项目</Button>
       </Row>
       {/* <Text /> */}
       {/* <Helmet>
@@ -96,7 +91,6 @@ export const ProjectListScreen = (props: {
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
       <List
-        projectButton={props.projectButton}
         refresh={retry}
         loading={isLoading}
         dataSource={list || []}

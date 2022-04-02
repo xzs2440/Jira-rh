@@ -7,23 +7,33 @@ import { useAsync } from "utils/use-async";
 export const LgoinPage = ({ onError }: { onError: (error: Error) => void }) => {
   const { login, user } = useAuth();
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
+  // const handleSubmit = async (values: {
+  //   username: string;
+  //   password: string;
+  // }) => {
+  //   // 阻止表单提交的默认行为
+  //   // event.preventDefault();
+  //   // const username = (event.currentTarget.elements[0] as HTMLInputElement)
+  //   //   .value;
+  //   // const password = (event.currentTarget.elements[1] as HTMLInputElement)
+  //   //   .value;
+  //   // login(values);
+  //   try {
+  //     await run(login(values));
+  //   } catch (e: any) {
+  //     onError(e);
+  //   }
+  //   // await login(values).catch(onError);
+  // };
   const handleSubmit = async (values: {
     username: string;
     password: string;
   }) => {
-    // 阻止表单提交的默认行为
-    // event.preventDefault();
-    // const username = (event.currentTarget.elements[0] as HTMLInputElement)
-    //   .value;
-    // const password = (event.currentTarget.elements[1] as HTMLInputElement)
-    //   .value;
-    // login(values);
     try {
-      await run(login(values));
+      await run(login(values)); // async await 之后，catch就能之后捕捉到
     } catch (e: any) {
       onError(e);
     }
-    // await login(values).catch(onError);
   };
   return (
     <Form onFinish={handleSubmit}>
