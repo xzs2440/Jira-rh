@@ -14,13 +14,13 @@ import { useUser } from "utils/user";
 import { useUrlQueryParam } from "utils/url";
 import { useProjectsSearchParams } from "./util";
 import { Row } from "components/lib";
+import { useDispatch } from "react-redux";
+import { projectListActions } from "./project-list.slice";
 // import { Helmet } from "react-helmet";
 // const apiURL = process.env.REACT_APP_API_URL;
 // 基本类型,可以放到依赖里, 组件状态可以放到依赖里,非组件状态的对象,绝不可放到依赖里
-export const ProjectListScreen = (props: {
-  // setProjectModalOpen: (isOpen: boolean) => void;
-  projectButton: JSX.Element;
-}) => {
+export const ProjectListScreen = () => {
+  const dispatch = useDispatch();
   useDocumentTitle("项目列表", false);
   const [param, setParam] = useProjectsSearchParams();
   const {
@@ -80,10 +80,9 @@ export const ProjectListScreen = (props: {
     <Container>
       <Row between={true} style={{ justifyContent: "space-between" }}>
         <h1>项目列表</h1>
-        {/* <Button onClick={() => props.setProjectModalOpen(true)}>
+        <Button onClick={() => dispatch(projectListActions.openProjectModal())}>
           创建项目
-        </Button> */}
-        {props.projectButton}
+        </Button>
       </Row>
       {/* <Text /> */}
       {/* <Helmet>
@@ -96,7 +95,6 @@ export const ProjectListScreen = (props: {
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
       <List
-        projectButton={props.projectButton}
         refresh={retry}
         loading={isLoading}
         dataSource={list || []}
