@@ -8,6 +8,7 @@ import left from "assets/left.svg";
 import right from "assets/right.svg";
 import { useDocumentTitle } from "utils";
 import { Helmet } from "react-helmet";
+import { ErrorBox } from "components/lib";
 export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<null | Error>(null);
@@ -28,9 +29,10 @@ export const UnauthenticatedApp = () => {
       </Button> */}
       <ShadowCard>
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
-        {error ? (
+        <ErrorBox error={error}/>
+        {/* {error ? (
           <Typography.Text type={"danger"}>{error.message}</Typography.Text>
-        ) : null}
+        ) : null} */}
         {isRegister ? (
           <RegisterPage onError={setError} />
         ) : (

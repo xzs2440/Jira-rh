@@ -13,7 +13,7 @@ import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
 import { useUrlQueryParam } from "utils/url";
 import { useProjectModal, useProjectsSearchParams } from "./util";
-import { ButtonNoPadding, Row } from "components/lib";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 // import { Helmet } from "react-helmet";
 // const apiURL = process.env.REACT_APP_API_URL;
 // 基本类型,可以放到依赖里, 组件状态可以放到依赖里,非组件状态的对象,绝不可放到依赖里
@@ -24,7 +24,7 @@ export const ProjectListScreen = () => {
     isLoading,
     error,
     data: list,
-    retry,
+    // retry,
   } = useProjects(useDebounce(param, 200));
   const { data: users } = useUser();
   const { open } = useProjectModal();
@@ -87,11 +87,12 @@ export const ProjectListScreen = () => {
 
       {/* <Button onClick={retry}>retry</Button> */}
       <SearchPanel param={param} setParam={setParam} users={users || []} />
-      {error ? (
+      <ErrorBox error={error}/>
+      {/* {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
-      ) : null}
+      ) : null} */}
       <List
-        refresh={retry}
+        // refresh={retry}
         loading={isLoading}
         dataSource={list || []}
         users={users || []}

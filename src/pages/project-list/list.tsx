@@ -20,13 +20,16 @@ export interface Project {
 }
 interface ListProps extends TableProps<Project> {
   users: User[];
-  refresh?: () => void;
+  // refresh?: () => void;
   // projectButton: JSX.Element;
 }
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
+  const { startEdit } = useProjectModal();
   const pinProject = (id: number) => (pin: boolean) =>
-    mutate({ id, pin }).then(props.refresh);
+    mutate({ id, pin });
+  const editProject = (id: number) => () => startEdit(id);
+  // .then(props.refresh)
   const { open } = useProjectModal();
 
   return (
@@ -92,8 +95,8 @@ export const List = ({ users, ...props }: ListProps) => {
                     <Menu.Item key="edit">
                       <ButtonNoPadding
                         type="link"
-                        // onClick={editProject(project.id)}
-                        onClick={open}
+                        onClick={editProject(project.id)}
+                        // onClick={open}
                       >
                         编辑
                       </ButtonNoPadding>
