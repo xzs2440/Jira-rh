@@ -30,7 +30,7 @@ export const List = ({ users, ...props }: ListProps) => {
     mutate({ id, pin });
   const editProject = (id: number) => () => startEdit(id);
   // .then(props.refresh)
-  const { open } = useProjectModal();
+  // const { open } = useProjectModal();
 
   return (
     <Table
@@ -85,7 +85,7 @@ export const List = ({ users, ...props }: ListProps) => {
           },
         },
         {
-          title: "创建时间",
+          title: "操作",
           dataIndex: "created",
           render(value, project) {
             return (

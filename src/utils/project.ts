@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
   return useQuery<Project[]>(["projects", param], () =>
-    client("projects", { data: cleanObj(param || {}) })
+    client("projects", { data: param })
   );
   // const { run, ...result } = useAsync<Project[]>();
   // const fetchProjects = useCallback(
@@ -48,7 +48,7 @@ export const useAddProject = () => {
   const queryClient = useQueryClient();
   return useMutation(
     (params: Partial<Project>) =>
-      client(`projects/${params.id}`, { data: params, method: "POST" }),
+      client(`projects`, { data: params, method: "POST" }),
     {
       onSuccess: () => queryClient.invalidateQueries("projects"),
     }

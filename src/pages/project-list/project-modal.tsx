@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Drawer, Button, Spin, Form, Input } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { UserSelect } from "components/user-select";
 import { useAddProject, useEditProject } from "utils/project";
 import { useProjectModal } from "./util";
 import { ErrorBox } from "components/lib";
+import styled from "@emotion/styled";
 
 export const ProjectModal = () => {
   const { projectModalOpen, close, editingProject, isLoading } =
@@ -19,6 +20,11 @@ export const ProjectModal = () => {
       close();
     });
   };
+  const closeModal = () => {
+    console.log(projectModalOpen);
+    form.resetFields();
+    close();
+  };
 
   const title = editingProject ? "编辑项目" : "创建项目";
 
@@ -28,10 +34,11 @@ export const ProjectModal = () => {
   return (
     <Drawer
       forceRender={true}
-      onClose={close}
+      onClose={closeModal}
       visible={projectModalOpen}
       width={"100%"}
     >
+      <Container>
       {isLoading ? (
         <Spin size="large" />
       ) : (
@@ -61,14 +68,23 @@ export const ProjectModal = () => {
             <Form.Item label="负责人" name="personId">
               <UserSelect defaultOptionName="负责人" />
             </Form.Item>
-            <Form.Item style={{ textAlign: "right" }}>
+            <Form.Item style={{ textAlign: "center" }}>
               <Button loading={mutateLoading} type="primary" htmlType="submit">
                 提交
               </Button>
             </Form.Item>
           </Form>
-        </>
+          </>
       )}
+      </Container>
     </Drawer>
   );
 };
+
+const Container = styled.div`
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
