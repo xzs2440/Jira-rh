@@ -6,7 +6,8 @@ import { cleanObj } from "utils";
  * 返回页面URL中，指定键的参数值
  * */
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
-  const [searchParams, setSearchParam] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const setSearchParams = useSetUrlSearchParam();
   return [
     useMemo(
       () =>
@@ -27,11 +28,12 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
        * 参数  传入 iterable   --   类似于 [],{},Map 或其他实现了可迭代协议的可迭代对象
        * 返回值  一个由迭代对象条目提供对应属性的新对象
        * */
-      const o = cleanObj({
-        ...Object.fromEntries(searchParams),  // 可以读取出url的对象
-        ...params,
-      }) as URLSearchParamsInit;
-      return setSearchParam(o);
+      // const o = cleanObj({
+      //   ...Object.fromEntries(searchParams), // 可以读取出url的对象
+      //   ...params,
+      // }) as URLSearchParamsInit;
+      // return setSearchParam(o);
+      return setSearchParams(params);
     },
   ] as const;
   // console.log(searchParams.get("name"));
@@ -41,3 +43,14 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
 // as const 为表达式推断出它能推断出的最窄或最特定的类型。
 // 如果不使用它，编译器将使用其默认类型推断行为，这可能会导致更广泛或更一般的类型。
 const a = ["jack", 12, { gender: "male" }] as const;
+
+export const useSetUrlSearchParam = () => {
+  const [searchParams, setSearchParam] = useSearchParams();
+  return (params: { [key in string]: unknown }) => {
+    const o = cleanObj({
+      ...Object.fromEntries(searchParams), // 可以读取出url的对象
+      ...params,
+    }) as URLSearchParamsInit;
+    return setSearchParam(o);
+  };
+};
