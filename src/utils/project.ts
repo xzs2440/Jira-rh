@@ -3,7 +3,13 @@ import { useAsync } from "utils/use-async";
 import { Project } from "pages/project-list/list";
 import { cleanObj } from "utils";
 import { useHttp } from "request/http";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
+import { useProjectsSearchParams } from "pages/project-list/util";
+import {
+  useAddConfig,
+  useDeleteConfig,
+  useEditConfig,
+} from "./use-optimistic-options";
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
   return useQuery<Project[]>(["projects", param], () =>
@@ -21,15 +27,35 @@ export const useProjects = (param?: Partial<Project>) => {
   // param变化的时候会触发
 };
 // 编辑list
-export const useEditProject = () => {
+export const useEditProject = (queryKey: QueryKey) => {
   const client = useHttp();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
+  // const [searchParams] = useProjectsSearchParams();
+  // const queryKey = ["projects", useProjectsSearchParams()];
   return useMutation(
     (params: Partial<Project>) =>
       client(`projects/${params.id}`, { data: params, method: "PATCH" }),
-    {
-      onSuccess: () => queryClient.invalidateQueries("projects"),
-    }
+    useEditConfig(queryKey)
+    // {
+    //   onSuccess: () => queryClient.invalidateQueries(queryKey),
+    //   async onMutate(target) {
+    //     const previousItems = queryClient.getQueryData(queryKey);
+    //     queryClient.setQueryData(queryKey, (old?: Project[]) => {
+    //       return (
+    //         old?.map((project) =>
+    //           project.id === target.id ? { ...project, ...target } : project
+    //         ) || []
+    //       );
+    //     });
+    //     return { previousItems };
+    //   },
+    //   onError(error, newItem, context: any) {
+    //     queryClient.setQueryData(
+    //       queryKey,
+    //       context.previousItems // === (context as { previousItems: Project[] }).previousItems
+    //     );
+    //   },
+    // }
   );
   // const { run, ...asyncResult } = useAsync();
   // const mutate = (params: Partial<Project>) => {
@@ -43,15 +69,16 @@ export const useEditProject = () => {
   // };
 };
 // 添加list
-export const useAddProject = () => {
+export const useAddProject = (queryKey: QueryKey) => {
   const client = useHttp();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   return useMutation(
     (params: Partial<Project>) =>
       client(`projects`, { data: params, method: "POST" }),
-    {
-      onSuccess: () => queryClient.invalidateQueries("projects"),
-    }
+    useAddConfig(queryKey)
+    // {
+    //   onSuccess: () => queryClient.invalidateQueries("projects"),
+    // }
   );
   // const { run, ...asyncResult } = useAsync();
   // const mutate = (params: Partial<Project>) => {
@@ -63,6 +90,17 @@ export const useAddProject = () => {
   //   mutate,
   //   ...asyncResult,
   // };
+};
+// 删除list
+export const useDeleteProject = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id }: { id: number }) =>
+      client(`projects/${id}`, {
+        method: "DELETE",
+      }),
+    useDeleteConfig(queryKey)
+  );
 };
 
 // 获取list详情

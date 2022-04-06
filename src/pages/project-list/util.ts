@@ -14,6 +14,10 @@ export const useProjectsSearchParams = () => {
     setParam,
   ] as const;
 };
+export const useProjectsQueryKey = () => {
+  const [param] = useProjectsSearchParams();
+  return ["projects", param];
+};
 
 export const useProjectModal = () => {
   const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
@@ -36,7 +40,7 @@ export const useProjectModal = () => {
   // 缺点：参数名被限制住了
   // return [projectCreate === "true", open, close] as const;
   return {
-    projectModalOpen: projectCreate === "true"||Boolean(editingProjectId),
+    projectModalOpen: projectCreate === "true" || Boolean(editingProjectId),
     open,
     close,
     startEdit,
