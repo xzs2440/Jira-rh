@@ -106,6 +106,7 @@ const Main = styled.main`
   overflow: hidden;
   height: calc(100vh - 6rem);
   grid-area: main;
+  /* width: 100%; */
 `;
 const HeaderItem = styled.h3`
   margin-right: 3rem;

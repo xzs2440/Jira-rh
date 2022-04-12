@@ -87,7 +87,7 @@ export const ProjectListScreen = () => {
 
       {/* <Button onClick={retry}>retry</Button> */}
       <SearchPanel param={param} setParam={setParam} users={users || []} />
-      <ErrorBox error={error}/>
+      <ErrorBox error={error} />
       {/* {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null} */}
@@ -112,4 +112,5 @@ ProjectListScreen.whyDidYouRender = false;
 
 const Container = styled.div`
   padding: 3.2rem;
+  width: 100%;
 `;
