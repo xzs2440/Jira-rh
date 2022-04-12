@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "pages/project-list/search-panel";
+import { User } from "types/User";
 import { Table, TableProps, Dropdown, Menu, Modal } from "antd";
 import dayjs from "dayjs";
 import { Pin } from "components/pin";
@@ -9,15 +9,8 @@ import { ButtonNoPadding } from "components/lib";
 import { Link } from "react-router-dom";
 import { useDeleteProject, useEditProject } from "utils/project";
 import { useProjectModal, useProjectsQueryKey } from "./util";
+import { Project } from "../../types/Project";
 
-export interface Project {
-  id: number;
-  name: string;
-  personId: number;
-  pin: boolean;
-  organization: string;
-  created: number;
-}
 interface ListProps extends TableProps<Project> {
   users: User[];
   // refresh?: () => void;

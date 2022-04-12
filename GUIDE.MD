@@ -322,3 +322,11 @@ type Age = Exclude<PersonKeys, "name">;
 ## 解决了redux 配置太复杂了
 ## 解决了redux 有太多依赖需要安装
 ## 解决了redux 需要很多模板代码
+
+# 跨组件状态管理总结
+## 小场面 -- 状态提升 / 组合组件
+### 
+## 缓存状态 -- react-query 、 SWT
+### 
+## 客户端状态 -- url / redux / context
+###

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { cleanObj, useDebounce, useDocumentTitle, useMount } from "utils";
-import { Project } from "pages/project-list/list";
+import { Project } from "types/Project";
 import * as qs from "qs";
 import { List } from "./list";
 // import { Text } from "../../components/text-closure";

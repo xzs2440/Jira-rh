@@ -3,15 +3,8 @@
 import { Form, Input, Select } from "antd";
 import { UserSelect } from "components/user-select";
 import React, { useEffect, useState } from "react";
-import { Project } from "./list";
-export interface User {
-  id: number;
-  name: string;
-  title: string;
-  email: string;
-  organization: string;
-  token: string;
-}
+import { Project } from "../../types/Project";
+import { User } from "../../types/User";
 interface SearchPanelProps {
   users: User[]; //uses是User类型的数组
   param: Partial<Pick<Project, "name" | "personId">>;

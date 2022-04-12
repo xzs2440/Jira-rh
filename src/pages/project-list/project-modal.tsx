@@ -25,7 +25,6 @@ export const ProjectModal = () => {
     });
   };
   const closeModal = () => {
-    console.log(projectModalOpen);
     form.resetFields();
     close();
   };

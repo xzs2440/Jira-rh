@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useAsync } from "utils/use-async";
-import { Project } from "pages/project-list/list";
+import { Project } from "types/Project";
 import { cleanObj } from "utils";
 import { useHttp } from "request/http";
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";

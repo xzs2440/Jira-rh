@@ -1,10 +1,11 @@
 import React, { ReactNode, useState } from "react";
 import * as auth from "auth-provider";
-import { User } from "pages/project-list/search-panel";
+import { User } from "types/User";
 import { http } from "request/http";
 import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
 import { FullPageErrorFallback, FullPageLoading } from "components/lib";
+import { useQueryClient } from "react-query";
 interface AuthForm {
   username: string;
   password: string;
@@ -42,9 +43,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   } = useAsync<User | null>();
   // const [user, setUser] = useState<User | null>(null);
   // point free
+  const queryClient = useQueryClient();
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
-  const logout = () => auth.logout().then(() => setUser(null));
+  const logout = () =>
+    auth.logout().then(() => {
+      setUser(null);
+      // 把使用userquery请求的数据，都清除掉
+      queryClient.clear();
+    });
   // 在页面加载的时候,调用bootstrapUser
   useMount(() => {
     run(bootstrapUser());
