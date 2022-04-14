@@ -10,7 +10,8 @@ import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { resetRoute } from "utils";
 import { ProjectModal } from "pages/project-list/project-modal";
-import { ProjectPopover } from "components/project-popover";
+import { ProjectPopover } from "pages/project-list/project-popover";
+import { UserPopover } from "pages/project-list/user-popover";
 
 export const AuthenticatedApp = () => {
   // const value: any = undefined;
@@ -53,7 +54,8 @@ const PageHeader = () => {
         </ButtonNoPadding>
         <ProjectPopover />
         {/* <h3>项目</h3> */}
-        <span>用户</span>
+        <UserPopover />
+        {/* <span>用户</span> */}
       </HeaderLeft>
       <HeaderRight>
         <User />

@@ -3,10 +3,10 @@ import { Popover, Typography, List, Divider, Button } from "antd";
 import { useProjectModal } from "pages/project-list/util";
 import React from "react";
 import { useProjects } from "utils/project";
-import { ButtonNoPadding } from "./lib";
+import { ButtonNoPadding } from "../../components/lib";
 
 export const ProjectPopover = () => {
-  const { data: projects, isLoading } = useProjects();
+  const { data: projects, refetch } = useProjects();
   const pinnedProjects = projects?.filter((project) => project.pin);
   const { open } = useProjectModal();
 
@@ -28,7 +28,11 @@ export const ProjectPopover = () => {
     </ContentContainer>
   );
   return (
-    <Popover placement={"bottom"} content={content}>
+    <Popover
+      onVisibleChange={() => refetch()}
+      placement={"bottom"}
+      content={content}
+    >
       <span>项目</span>
     </Popover>
   );
