@@ -64,7 +64,7 @@ export const EpicScreen = () => {
                 </div>
               }
             />
-            <div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               {tasks
                 ?.filter((task) => task.epicId === epic.id)
                 .map((task) => (
