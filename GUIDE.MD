@@ -329,4 +329,10 @@ type Age = Exclude<PersonKeys, "name">;
 ## 缓存状态 -- react-query 、 SWT
 ### 
 ## 客户端状态 -- url / redux / context
-###
+
+# 自动化测试
+## 目的 -- 让我们对自己写的代码更有信息,防止出现'新代码破坏旧代码'的无线循环
+## 分类
+### 单元测试:传统但远程测试,组件测试,hook测试
+### 集成测试
+### e(nd)2e(nd)测试
